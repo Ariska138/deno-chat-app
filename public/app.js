@@ -1,6 +1,18 @@
 const myUsername = prompt('Please enter your name') || 'Anonymous';
+import { Deno } from 'https://deno.land/std@0.99.0/mod.ts';
+import { URL } from 'https://deno.land/std@0.99.0/url/mod.ts';
+
+const myurl = Deno.args[0];
+
+// Buat objek URL dari string URL
+const url = new URL(myurl);
+
+// Akses properti hostname dari objek URL untuk mendapatkan nama domain
+const domain = url.hostname;
+
+console.log(args);
 const socket = new WebSocket(
-  `wss://chat-deno.deno.dev/start_web_socket?username=${myUsername}`
+  `wss://${domain}/start_web_socket?username=${myUsername}`
 );
 
 socket.onmessage = (m) => {
