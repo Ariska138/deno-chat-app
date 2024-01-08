@@ -1,6 +1,6 @@
 const myUsername = prompt('Please enter your name') || 'Anonymous';
 const socket = new WebSocket(
-  `ws://chat-deno.deno.dev/start_web_socket?username=${myUsername}`
+  `wss://chat-deno.deno.dev/start_web_socket?username=${myUsername}`
 );
 
 socket.onmessage = (m) => {
