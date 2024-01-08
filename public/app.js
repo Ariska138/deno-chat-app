@@ -1,22 +1,22 @@
-const myUsername = prompt("Please enter your name") || "Anonymous";
+const myUsername = prompt('Please enter your name') || 'Anonymous';
 const socket = new WebSocket(
-  `ws://localhost:8080/start_web_socket?username=${myUsername}`
+  `ws://chat-deno.deno.dev/start_web_socket?username=${myUsername}`
 );
 
 socket.onmessage = (m) => {
   const data = JSON.parse(m.data);
 
   switch (data.event) {
-    case "update-users":
+    case 'update-users':
       // refresh displayed user list
-      let userListHtml = "";
+      let userListHtml = '';
       for (const username of data.usernames) {
         userListHtml += `<div> ${username} </div>`;
       }
-      document.getElementById("users").innerHTML = userListHtml;
+      document.getElementById('users').innerHTML = userListHtml;
       break;
 
-    case "send-message":
+    case 'send-message':
       // display new chat message
       addMessage(data.username, data.message);
       break;
@@ -26,24 +26,25 @@ socket.onmessage = (m) => {
 function addMessage(username, message) {
   // displays new message
   document.getElementById(
-    "conversation"
+    'conversation'
   ).innerHTML += `<b> ${username} </b>: ${message} <br/>`;
 }
 
 // on page load
 window.onload = () => {
   // when the client hits the ENTER key
-  document.getElementById("data").addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      const inputElement = document.getElementById("data");
+  document.getElementById('data').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const inputElement = document.getElementById('data');
       var message = inputElement.value;
-      inputElement.value = "";
+      inputElement.value = '';
       socket.send(
         JSON.stringify({
-          event: "send-message",
+          event: 'send-message',
           message: message,
         })
       );
     }
   });
 };
+
